@@ -3,6 +3,9 @@ import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import { GameGrid } from '@/components/GameGrid';
 import { SnakeGame } from '@/components/SnakeGame';
+import { TetrisGame } from '@/components/TetrisGame';
+import { FlappyBirdGame } from '@/components/FlappyBirdGame';
+import { CarRacingGame } from '@/components/CarRacingGame';
 
 const Index = () => {
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -26,6 +29,15 @@ const Index = () => {
       {/* Game Modals */}
       {selectedGame === 'snake' && (
         <SnakeGame onClose={handleCloseGame} />
+      )}
+      {selectedGame === 'tetris' && (
+        <TetrisGame onClose={handleCloseGame} />
+      )}
+      {selectedGame === 'flappybird' && (
+        <FlappyBirdGame onClose={handleCloseGame} />
+      )}
+      {selectedGame === 'racing' && (
+        <CarRacingGame onClose={handleCloseGame} />
       )}
       
       {/* Footer */}

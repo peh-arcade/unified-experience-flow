@@ -11,9 +11,9 @@ export const GameGrid: React.FC<GameGridProps> = ({ onGameSelect }) => {
     {
       id: 'snake',
       title: 'Snake',
-      description: 'Classic snake game with modern twists',
+      description: 'Classic snake game with swipe controls',
       icon: Gamepad2,
-      bestScore: '247',
+      bestScore: localStorage.getItem('snakeHighScore') || '0',
       comingSoon: false
     },
     {
@@ -21,24 +21,24 @@ export const GameGrid: React.FC<GameGridProps> = ({ onGameSelect }) => {
       title: 'Tetris',
       description: 'Stack blocks and clear lines',
       icon: Square,
-      bestScore: '12,450',
-      comingSoon: true
+      bestScore: localStorage.getItem('tetrisHighScore') || '0',
+      comingSoon: false
     },
     {
       id: 'flappybird',
       title: 'Flappy Bird',
-      description: 'Navigate through obstacles',
+      description: 'Tap to flap through obstacles',
       icon: Bird,
-      bestScore: '23',
-      comingSoon: true
+      bestScore: localStorage.getItem('flappyBirdHighScore') || '0',
+      comingSoon: false
     },
     {
       id: 'racing',
       title: 'Car Racing',
-      description: 'High-speed racing adventure',
+      description: 'Swipe to dodge traffic',
       icon: Car,
-      bestScore: '1,240m',
-      comingSoon: true
+      bestScore: localStorage.getItem('carRacingHighScore') || '0',
+      comingSoon: false
     }
   ];
 

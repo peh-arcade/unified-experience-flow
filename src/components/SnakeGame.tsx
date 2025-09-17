@@ -109,22 +109,31 @@ export const SnakeGame: React.FC<SnakeGameProps> = ({ onClose }) => {
     return () => clearInterval(gameInterval);
   }, [moveSnake]);
 
+  // Touch and keyboard controls
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'ArrowUp':
+        case 'w':
+        case 'W':
           e.preventDefault();
           if (direction !== 'DOWN') setDirection('UP');
           break;
         case 'ArrowDown':
+        case 's':
+        case 'S':
           e.preventDefault();
           if (direction !== 'UP') setDirection('DOWN');
           break;
         case 'ArrowLeft':
+        case 'a':
+        case 'A':
           e.preventDefault();
           if (direction !== 'RIGHT') setDirection('LEFT');
           break;
         case 'ArrowRight':
+        case 'd':
+        case 'D':
           e.preventDefault();
           if (direction !== 'LEFT') setDirection('RIGHT');
           break;
@@ -135,8 +144,54 @@ export const SnakeGame: React.FC<SnakeGameProps> = ({ onClose }) => {
       }
     };
 
+    // Touch controls
+    let touchStartX = 0;
+    let touchStartY = 0;
+    
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    };
+    
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!touchStartX || !touchStartY) return;
+      
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+      
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        // Horizontal swipe
+        if (Math.abs(diffX) > 30) {
+          if (diffX > 0 && direction !== 'RIGHT') {
+            setDirection('LEFT');
+          } else if (diffX < 0 && direction !== 'LEFT') {
+            setDirection('RIGHT');
+          }
+        }
+      } else {
+        // Vertical swipe
+        if (Math.abs(diffY) > 30) {
+          if (diffY > 0 && direction !== 'DOWN') {
+            setDirection('UP');
+          } else if (diffY < 0 && direction !== 'UP') {
+            setDirection('DOWN');
+          }
+        }
+      }
+    };
+
     window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
   }, [direction]);
 
   const startGame = () => {
@@ -266,15 +321,20 @@ export const SnakeGame: React.FC<SnakeGameProps> = ({ onClose }) => {
             </button>
           </div>
 
-          {/* Mobile Controls Hint */}
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              Use arrow keys or{' '}
-              <span className="text-accent font-semibold">WASD</span> to control
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Press <span className="text-accent">Space</span> to pause
-            </p>
+          {/* Controls Info */}
+          <div className="text-center space-y-2">
+            <div className="p-4 rounded-lg bg-accent/10 border border-accent/20">
+              <p className="text-sm font-semibold text-accent mb-2">Mobile Controls</p>
+              <p className="text-xs text-muted-foreground">
+                Swipe in any direction to control the snake!
+              </p>
+            </div>
+            
+            <div className="text-xs text-muted-foreground space-y-1">
+              <p>Desktop: Arrow keys or WASD</p>
+              <p>Mobile: Swipe gestures</p>
+              <p>Press Space to pause</p>
+            </div>
           </div>
         </div>
       </div>
