@@ -80,10 +80,40 @@ export default {
             height: "0",
           },
         },
+        "float": {
+          "0%, 100%": {
+            transform: "translateY(0px)"
+          },
+          "50%": {
+            transform: "translateY(-10px)"
+          }
+        },
+        "glow-pulse": {
+          "0%, 100%": {
+            boxShadow: "0 0 20px hsl(270 85% 60% / 0.3)"
+          },
+          "50%": {
+            boxShadow: "0 0 40px hsl(270 85% 60% / 0.6), 0 0 60px hsl(280 90% 70% / 0.4)"
+          }
+        },
+        "game-bounce": {
+          "0%, 20%, 53%, 80%, 100%": {
+            transform: "translateY(0px)"
+          },
+          "40%, 43%": {
+            transform: "translateY(-10px)"
+          },
+          "70%": {
+            transform: "translateY(-5px)"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 3s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite alternate",
+        "game-bounce": "game-bounce 2s ease-in-out infinite"
       },
     },
   },
